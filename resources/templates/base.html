@@ -1,0 +1,65 @@
+{{define "head"}}
+<title>{{.SiteTitle}} - {{.PageTitle}}</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+<style>
+    ::-webkit-scrollbar {border-radius: 24px; width: 8px;}
+    ::-webkit-scrollbar-thumb {background: #e5e5e5; border-radius: 10px;}
+</style>
+<script async src="/js/iconify.min.js"></script>
+<script>
+    function toggleNavMenu() {
+        const navMenu = document.getElementById("navMenu");
+        const navbarBurger = document.getElementById("navbarBurger");
+        if (navMenu.classList.contains("is-active")) {
+            navMenu.classList.remove("is-active")
+            navbarBurger.classList.remove("is-active")
+        } else {
+            navMenu.classList.add("is-active")
+            navbarBurger.classList.add("is-active")
+        }
+    }
+</script>
+{{if eq .Theme "dark"}}
+<link rel="stylesheet" type="text/css" href="/css/darkreader.css">
+{{end}}
+{{end}}
+
+{{define "navbar"}}
+<nav class="navbar" role="navigation" aria-label="main nav" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">{{.SiteTitle}}</a>
+
+            <a role="button" class="navbar-burger" onclick="toggleNavMenu()" aria-label="menu" aria-expanded="false" id="navbarBurger">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                <a class="navbar-item {{if eq (print .Page) `home`}}is-active{{end}}" href="/">Home</a>
+                {{if and .User (ne .User "_public_")}}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">{{.User}}</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/logout">Logout</a>
+                    </div>
+                </div>
+                {{else if eq .User "_public_"}}
+                <a class="navbar-item {{if eq (print .Page) `login`}}is-active{{end}}" href="/login">Login</a>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</nav>
+{{end}}
+
+{{define "icon"}}
+<span class="iconify icon:{{.}} icon-inline:false"></span>
+{{end}}
+
+{{define "icon-inline"}}
+<span class="iconify icon:{{.}}"></span>
+{{end}}

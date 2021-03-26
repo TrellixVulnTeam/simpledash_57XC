@@ -1,0 +1,43 @@
+<div class="card-header">
+    <p class="card-header-title">{{.Title}}</p>
+</div>
+<div class="card-content">
+    <p id="weatherLoadingText">Loading...</p>
+    <div class="columns is-mobile">
+        <div class="column is-half">
+            <object type="image/svg+xml" id="weatherStateImg" style="width:45px; height: 45px"></object>
+        </div>
+        <div class="column is-half">
+            <p id="weatherTempText" class="has-text-right subtitle"></p>
+        </div>
+    </div>
+    <p class="subtitle is-marginless" id="weatherStateText"></p>
+    <p id="weatherMinText"></p>
+    <p id="weatherMaxText"></p>
+    <p id="weatherWindSpeedText"></p>
+    <p id="weatherHumidityText"></p>
+    <p id="weatherVisibilityText"></p>
+    <p id="weatherPredictabilityText"></p>
+</div>
+<div class="card-footer" style="margin-top: auto">
+    <span class="card-footer-item">Data from&nbsp;<a href="https://www.metaweather.com" class="has-text-info">Metaweather</a></span>
+</div>
+<script>
+    var request = new XMLHttpRequest()
+    request.open('GET', "{{proxy (printf `https://www.metaweather.com/api/location/%s/` .Data.woeid) }}", true)
+    const round = function (flt){return Number.parseFloat(flt).toPrecision(3)}
+    request.onload = function () {
+        const data = JSON.parse(this.response)
+        document.getElementById('weatherLoadingText').classList.add("is-hidden")
+        document.getElementById('weatherStateText').innerText = data["consolidated_weather"][0]["weather_state_name"]
+        document.getElementById('weatherTempText').innerHTML = round(data["consolidated_weather"][0]["the_temp"]*1.8+32) + " &deg;F"
+        document.getElementById('weatherStateImg').data = "/proxy/" + btoa("https://www.metaweather.com/static/img/weather/" + data["consolidated_weather"][0]["weather_state_abbr"] + ".svg")
+        document.getElementById('weatherMinText').innerHTML = "Min: " + round(data["consolidated_weather"][0]["min_temp"]*1.8+32) + " &deg;F"
+        document.getElementById('weatherMaxText').innerHTML = "Max: " + round(data["consolidated_weather"][0]["max_temp"]*1.8+32) + " &deg;F"
+        document.getElementById('weatherWindSpeedText').innerText = "Wind Speed: " + round(data["consolidated_weather"][0]["wind_speed"]) + "mph"
+        document.getElementById('weatherHumidityText').innerText = "Humidity: " + data["consolidated_weather"][0]["humidity"] + "%"
+        document.getElementById('weatherVisibilityText').innerText = "Visibility: " + round(data["consolidated_weather"][0]["visibility"]) + "mi"
+        document.getElementById('weatherPredictabilityText').innerText = "Predictability: " + data["consolidated_weather"][0]["predictability"] + "%"
+    }
+    request.send()
+</script>

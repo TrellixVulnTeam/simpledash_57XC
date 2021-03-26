@@ -1,0 +1,21 @@
+<div class="card-header">
+    <p class="card-header-title">{{.Title}}</p>
+    {{if ne .Icon ""}}
+    <div class="card-header-icon subtitle">
+        {{template "icon" .Icon}}
+    </div>
+    {{end}}
+</div>
+<div class="card-content">
+    {{ range $name, $info := .Data }}
+    {{$data := dict "target" ""}}
+    {{- if eq $info.target "sameTab" -}}
+        {{- $_ := set $data "target" "_self" -}}
+    {{- else if eq $info.target "newTab" -}}
+        {{- $_ := set $data "target" "_blank" -}}
+    {{- else -}}
+        {{- $_ := set $data "target" "_self" -}}
+    {{- end -}}
+    <a href="{{$info.url}}" class="button is-fullwidth has-text-left is-justify-content-start" target="{{$data.target}}" style="margin-bottom: 0.5rem; background-color: #f5f5f5">{{$name}}</a>
+    {{end}}
+</div>

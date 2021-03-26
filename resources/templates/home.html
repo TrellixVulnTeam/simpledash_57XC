@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{{template "base.html"}}
+<html lang="en">
+    <head>
+        {{template "head" dict
+        "SiteTitle" .Config.Title
+        "PageTitle" "Home"
+        "Theme" .Config.Theme}}
+    </head>
+    <body>
+        {{ template "navbar" dict
+        "SiteTitle" .Config.Title
+        "Page" "home"
+        "User" .Username }}
+        <div class="hero is-fullheight-with-navbar is-light">
+            <div class="hero-head" style="margin: 10px 30px 0 30px">
+                <div class="row columns is-multiline is-mobile">
+                    {{if .User.ShowPublic}}
+                        {{ range $_, $card := .Config.Users._public_.Cards }}
+                        <div class="column is-half-tablet is-one-quarter-fullhd is-one-third-desktop is-full-mobile">
+                            <div class="card is-flex is-flex-direction-column" style="min-height: 175px; max-height: 175px; overflow: auto">
+                                {{dyn_template $card.Type $card}}
+                            </div>
+                        </div>
+                        {{end}}
+                    {{end}}
+                    {{ range $_, $card := .User.Cards }}
+                    <div class="column is-half-tablet is-one-quarter-fullhd is-one-third-desktop is-full-mobile">
+                        <div class="card is-flex is-flex-direction-column" style="min-height: 175px; max-height: 175px; overflow: auto">
+                            {{dyn_template $card.Type $card}}
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+                <br>
+            </div>
+        </div>
+    </body>
+</html>

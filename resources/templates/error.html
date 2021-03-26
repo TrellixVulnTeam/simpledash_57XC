@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {{template "head" dict
+        "SiteTitle" .Config.Title
+        "PageTitle" "Error"
+        "Theme" .Config.Theme}}
+    </head>
+    <body>
+        {{template "navbar" dict
+        "SiteTitle" .Config.Title
+        "Page" "error"
+        "User" ""}}
+        <div class="hero is-fullheight-with-navbar is-light">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <p class="title">Error <span class="has-text-danger">{{.StatusCode}}</span></p>
+                    <p class="subtitle">{{.Reason}}</p>
+                    <a class="button is-danger" href="/">Go to homepage</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

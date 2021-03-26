@@ -1,0 +1,18 @@
+<div class="card-header">
+    <a class="card-header-title" href="{{.URL}}">
+        {{if ne .Icon ""}}
+        {{template "icon" .Icon}}&nbsp;
+        {{end}}
+        {{.Title}}
+    </a>
+</div>
+{{if ne .Description ""}}
+<div class="card-content">
+    <p>{{.Description}}</p>
+</div>
+{{end}}
+{{if ne .URL ""}}
+<div class="card-footer" style="margin-top: auto">
+    <a class="card-footer-item has-text-info" href="{{.URL}}">{{.URL}}</a>
+</div>
+{{end}}

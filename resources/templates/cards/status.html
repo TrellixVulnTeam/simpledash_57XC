@@ -1,0 +1,39 @@
+<div class="card-header">
+    <a class="card-header-title" href="{{.URL}}">
+        {{if ne .Icon ""}}
+        {{template "icon" .Icon}}&nbsp;
+        {{end}}
+        {{.Title}}
+    </a>
+    <div class="card-header-icon">
+        <div class="tags has-addons">
+            <p class="tag">Status</p>
+            <p class="tag is-warning" id="{{.Title}}Status">Loading...</p>
+        </div>
+    </div>
+</div>
+{{if ne .Description ""}}
+<div class="card-content">
+    <p>{{.Description}}</p>
+</div>
+{{end}}
+<div class="card-footer" style="margin-top: auto">
+    <a class="card-footer-item has-text-info" href="{{.URL}}">{{.URL}}</a>
+</div>
+<script>
+    var request = new XMLHttpRequest()
+    request.open('GET', "/status/{{b64enc .URL}}", true)
+    request.onload = function () {
+        var data = JSON.parse(this.response)
+        if (data.down === true || parseInt(data.code) > 500 && parseInt(data.code) < 600 ) {
+            document.getElementById('{{.Title}}Status').classList.remove("is-warning")
+            document.getElementById('{{.Title}}Status').classList.add("is-danger")
+            document.getElementById('{{.Title}}Status').innerHTML = "Offline"
+        } else {
+            document.getElementById('{{.Title}}Status').classList.remove("is-warning")
+            document.getElementById('{{.Title}}Status').classList.add("is-success")
+            document.getElementById('{{.Title}}Status').innerHTML = "Online"
+        }
+    }
+    request.send()
+</script>

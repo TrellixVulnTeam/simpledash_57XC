@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{{template "base.html"}}
+<html lang="en">
+    <head>
+        {{template "head" dict
+        "SiteTitle" .Config.Title
+        "PageTitle" "Login"
+        "Theme" .Config.Theme}}
+    </head>
+    <body>
+        {{ template "navbar" dict "SiteTitle" .Config.Title "Page" "login" "User" .Username}}
+        <div class="hero is-fullheight-with-navbar is-light">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <article style="max-width: 30rem; margin-left: auto; margin-right: auto" class="message is-danger">
+                        {{if eq .Error "usr"}}
+                        <p class="message-header">User does not exist!</p>
+                        {{else if eq .Error "pwd"}}
+                        <p class="message-header">Incorrect password!</p>
+                        {{end}}
+                    </article>
+                    <p class="subtitle">Login to {{.Config.Title}}</p>
+                    <form action="/login" method="post">
+                        <input style="max-width: 20rem" class="input is-info" type="text" placeholder="Username" name="username"><br>
+                        <br>
+                        <input style="max-width: 20rem" class="input is-info" type="password" placeholder="Password" name="password"><br><br>
+                        <input class="button" style="background-color: #f5f5f5" type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
