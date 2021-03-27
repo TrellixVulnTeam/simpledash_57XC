@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"github.com/Masterminds/sprig"
 	"github.com/gorilla/mux"
@@ -9,6 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 	flag "github.com/spf13/pflag"
 	"github.com/wader/gormstore/v2"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -39,8 +41,19 @@ func main() {
 	addr := flag.IPP("addr", "a", net.ParseIP("0.0.0.0"), "Bind address for HTTP server")
 	port := flag.IntP("port", "p", 8080, "Bind port for HTTP server")
 	config := flag.StringP("config", "c", "simpledash.toml", "TOML config file")
+	hash := flag.String("hash", "", "Generate new bcrypt password hash")
+	flag.ErrHelp = errors.New("simpledash: help requested")
 	// Parse flags
 	flag.Parse()
+
+	if *hash != "" {
+		hash, err := bcrypt.GenerateFromPassword([]byte(*hash), bcrypt.DefaultCost)
+		if err != nil {
+			Log.Fatal().Err(err).Msg("Error creating bcrypt hash")
+		}
+		fmt.Println(string(hash))
+		os.Exit(0)
+	}
 
 	// Create new router
 	router := mux.NewRouter().StrictSlash(true)

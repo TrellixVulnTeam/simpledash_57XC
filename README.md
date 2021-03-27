@@ -35,7 +35,8 @@ A user can be added under the `[users]` section like so:
     passwordHash = "$2a$10$w00dzQ1PP6nwXLhuzV2pFOUU6m8bcZXtDX3UVxpOYq3fTSwVMqPge"
     showPublic = true
 ```
-`passwordHash` should be a bcrypt hash of the desired password with a cost of 10 (default)
+`passwordHash` should be a bcrypt hash of the desired password with a cost of 10 (default). `simpledash --hash <password>` can be used to get a suitable hash
+
 `showPublic` should be a boolean denoting whether public cards should be displayed while signed in
 
 #### Cards

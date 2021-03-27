@@ -1,5 +1,5 @@
 {{- $format := splitList "\n" (trim .Data.format) -}}
-{{- $title := replace " " "" .Title -}}
+{{- $randID := randAlphaNum 10 -}}
 <div class="card-header">
     <a class="card-header-title" href="{{.URL}}">
         {{if ne .Icon ""}}
@@ -9,10 +9,9 @@
     </a>
 </div>
 <div class="card-content">
-    <p id="{{$title}}LoadingText">Loading...</p>
-    {{range $_, $accessStr := $format}}
-    {{- $id := printf `%s_%s` $title (b64enc $accessStr) -}}
-    <p id="{{$id}}"></p>
+    <p id="APILoadingText_{{$randID}}">Loading...</p>
+    {{range $index, $fmtStr := $format}}
+    <div id="{{printf `APIElement%d_%s` $index $randID}}"></div>
     {{end}}
 </div>
 {{if .Data.footer}}
@@ -25,10 +24,9 @@
     request.open('GET', "{{proxy .URL}}", true)
     request.onload = function () {
         const data = JSON.parse(this.response)
-        document.getElementById("{{$title}}LoadingText").classList.add("is-hidden")
-        {{range $_, $accessStr := $format}}
-        {{- $id := printf `%s_%s` $title (b64enc $accessStr) -}}
-        document.getElementById("{{$id}}").innerHTML = `{{unescJS (trim $accessStr)}}`
+        document.getElementById("APILoadingText_{{$randID}}").classList.add("is-hidden")
+        {{range $index, $fmtStr := $format}}
+        document.getElementById("{{printf `APIElement%d_%s` $index $randID}}").innerHTML = `{{unescJS (trim $fmtStr)}}`
         {{end}}
     }
     request.send()

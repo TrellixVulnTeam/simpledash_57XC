@@ -1,3 +1,4 @@
+{{- $randID := randAlphaNum 10 -}}
 <div class="card-header">
     <a class="card-header-title" href="{{.URL}}">
         {{if ne .Icon ""}}
@@ -8,7 +9,7 @@
     <div class="card-header-icon">
         <div class="tags has-addons">
             <p class="tag">Status</p>
-            <p class="tag is-warning" id="{{.Title}}Status">Loading...</p>
+            <p class="tag is-warning" id="StatusTag_{{$randID}}">Loading...</p>
         </div>
     </div>
 </div>
@@ -26,13 +27,13 @@
     request.onload = function () {
         var data = JSON.parse(this.response)
         if (data.down === true || parseInt(data.code) > 500 && parseInt(data.code) < 600 ) {
-            document.getElementById('{{.Title}}Status').classList.remove("is-warning")
-            document.getElementById('{{.Title}}Status').classList.add("is-danger")
-            document.getElementById('{{.Title}}Status').innerHTML = "Offline"
+            document.getElementById('StatusTag_{{$randID}}').classList.remove("is-warning")
+            document.getElementById('StatusTag_{{$randID}}').classList.add("is-danger")
+            document.getElementById('StatusTag_{{$randID}}').innerHTML = "Offline"
         } else {
-            document.getElementById('{{.Title}}Status').classList.remove("is-warning")
-            document.getElementById('{{.Title}}Status').classList.add("is-success")
-            document.getElementById('{{.Title}}Status').innerHTML = "Online"
+            document.getElementById('StatusTag_{{$randID}}').classList.remove("is-warning")
+            document.getElementById('StatusTag_{{$randID}}').classList.add("is-success")
+            document.getElementById('StatusTag_{{$randID}}').innerHTML = "Online"
         }
     }
     request.send()

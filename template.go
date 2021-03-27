@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"html/template"
+	"regexp"
 )
 
 // Function to dynamically execute template and return results
@@ -33,6 +34,14 @@ func unescapeJS(s string) template.JS {
 	return template.JS(s)
 }
 
+// Remove all non-alphanumeric characters
+func toAlphaNum(s string) string {
+	// Create regex matching everything but alphanumeric
+	regex := regexp.MustCompile(`[^a-zA-Z0-9]+`)
+	// Remove all matched characters in string, then return
+	return regex.ReplaceAllString(s, "")
+}
+
 // Function to get template function map
 func getFuncMap() template.FuncMap {
 	// Return function map with template functions
@@ -40,5 +49,6 @@ func getFuncMap() template.FuncMap {
 		"dyn_template": dynamicTemplate,
 		"proxy":        wrapProxy,
 		"unescJS": unescapeJS,
-	}
+		"toAlphaNum": toAlphaNum,
+ 	}
 }
