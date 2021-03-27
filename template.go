@@ -28,11 +28,17 @@ func wrapProxy(url string) string {
 	return fmt.Sprint("/proxy/", b64url)
 }
 
+// Wrap string in template.JS to unescape JS code
+func unescapeJS(s string) template.JS {
+	return template.JS(s)
+}
+
 // Function to get template function map
 func getFuncMap() template.FuncMap {
 	// Return function map with template functions
 	return template.FuncMap{
 		"dyn_template": dynamicTemplate,
 		"proxy":        wrapProxy,
+		"unescJS": unescapeJS,
 	}
 }

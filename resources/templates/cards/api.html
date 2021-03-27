@@ -1,0 +1,35 @@
+{{- $format := splitList "\n" (trim .Data.format) -}}
+{{- $title := replace " " "" .Title -}}
+<div class="card-header">
+    <a class="card-header-title" href="{{.URL}}">
+        {{if ne .Icon ""}}
+        {{template "icon" .Icon}}&nbsp;
+        {{end}}
+        {{.Title}}
+    </a>
+</div>
+<div class="card-content">
+    <p id="{{$title}}LoadingText">Loading...</p>
+    {{range $_, $accessStr := $format}}
+    {{- $id := printf `%s_%s` $title (b64enc $accessStr) -}}
+    <p id="{{$id}}"></p>
+    {{end}}
+</div>
+{{if .Data.footer}}
+<div class="card-footer" style="margin-top: auto">
+    <p class="card-footer-item">{{.Data.footer}}</p>
+</div>
+{{end}}
+<script>
+    var request = new XMLHttpRequest()
+    request.open('GET', "{{proxy .URL}}", true)
+    request.onload = function () {
+        const data = JSON.parse(this.response)
+        document.getElementById("{{$title}}LoadingText").classList.add("is-hidden")
+        {{range $_, $accessStr := $format}}
+        {{- $id := printf `%s_%s` $title (b64enc $accessStr) -}}
+        document.getElementById("{{$id}}").innerHTML = `{{unescJS (trim $accessStr)}}`
+        {{end}}
+    }
+    request.send()
+</script>

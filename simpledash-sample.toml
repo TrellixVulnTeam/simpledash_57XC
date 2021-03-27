@@ -1,7 +1,7 @@
 title = "SimpleDash"
 theme = "dark"
 loginRequired = false
-allowProxy = ["https://www.metaweather.com/"]
+allowProxy = ["https://www.metaweather.com/", "https://ifconfig.co/json"]
 
 [session]
   name = "simpledash-session"
@@ -11,6 +11,16 @@ allowProxy = ["https://www.metaweather.com/"]
     type = "weather"
     title = "Weather"
     data = {"woeid" = "2442047"}
+
+  [[users._public_.card]]
+    type = "api"
+    title = "Server IP (API card example)"
+    url = "https://ifconfig.co/json"
+    data = {"format" = """
+    <p class="subtitle">${data.ip}</p>
+    Country: ${data.country} (${data.country_iso})
+    Time zone: ${data.time_zone}
+    """}
 
   [users.admin]
     passwordHash = "$2a$10$w00dzQ1PP6nwXLhuzV2pFOUU6m8bcZXtDX3UVxpOYq3fTSwVMqPge"
@@ -42,4 +52,4 @@ allowProxy = ["https://www.metaweather.com/"]
       type = "collection"
       title = "Science"
       icon = "ic:outline-science"
-      data = {"Google Scholar" = {"url" = "https://robinhood.com/", "target" = "sameTab"}}
+      data = {"Google Scholar" = {"url" = "https://scholar.google.com/", "target" = "sameTab"}}
