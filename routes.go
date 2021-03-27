@@ -38,6 +38,8 @@ func registerRoutes(app App) {
 		if !ok && app.Config.LoginRequired {
 			// Redirect to login page
 			http.Redirect(res, req, "/login", http.StatusFound)
+			// Return from function
+			return
 		} else if !ok && !app.Config.LoginRequired {
 			// If not logged in and login is not required
 			// Set logged in to public user
