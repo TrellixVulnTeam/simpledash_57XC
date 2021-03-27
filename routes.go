@@ -23,6 +23,13 @@ type TemplateData struct {
 func registerRoutes(app App) {
 	// Root endpoint, home page
 	app.Route.Path("/").HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		// If HEAD request received
+		if req.Method == http.MethodHead {
+			// Reply with code 200 OK
+			res.WriteHeader(http.StatusOK)
+			// Return from function
+			return
+		}
 		// Get session by name from config
 		session, _ := app.Session.Get(req, app.Config.Session.Name)
 		// Attempt to get loggedInAs from session
