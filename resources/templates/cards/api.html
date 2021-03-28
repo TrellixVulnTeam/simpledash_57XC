@@ -9,13 +9,13 @@
     </a>
 </div>
 <div class="card-content">
-    <p id="APILoadingText_{{$randID}}">Loading...</p>
+    <progress class="progress is-light" id="APILoading_{{$randID}}"></progress>
     {{range $index, $fmtStr := $format}}
     <div id="{{printf `APIElement%d_%s` $index $randID}}"></div>
     {{end}}
 </div>
 {{if .Data.footer}}
-<div class="card-footer" style="margin-top: auto">
+<div class="card-footer">
     <p class="card-footer-item">{{.Data.footer}}</p>
 </div>
 {{end}}
@@ -24,7 +24,7 @@
     request.open('GET', "{{proxy .URL}}", true)
     request.onload = function () {
         const data = JSON.parse(this.response)
-        document.getElementById("APILoadingText_{{$randID}}").classList.add("is-hidden")
+        document.getElementById("APILoading_{{$randID}}").classList.add("is-hidden")
         {{range $index, $fmtStr := $format}}
         document.getElementById("{{printf `APIElement%d_%s` $index $randID}}").innerHTML = `{{unescJS (trim $fmtStr)}}`
         {{end}}

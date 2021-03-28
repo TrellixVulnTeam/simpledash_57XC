@@ -3,7 +3,7 @@
     <p class="card-header-title">{{.Title}}</p>
 </div>
 <div class="card-content">
-    <p id="weatherLoadingText_{{$randID}}">Loading...</p>
+    <progress class="progress is-light" id="weatherLoading_{{$randID}}"></progress>
     <div class="columns is-mobile">
         <div class="column is-half">
             <object type="image/svg+xml" id="weatherStateImg_{{$randID}}" style="width:45px; height: 45px"></object>
@@ -20,7 +20,7 @@
     <p id="weatherVisibilityText_{{$randID}}"></p>
     <p id="weatherPredictabilityText_{{$randID}}"></p>
 </div>
-<div class="card-footer" style="margin-top: auto">
+<div class="card-footer">
     <span class="card-footer-item">Data from&nbsp;<a href="https://www.metaweather.com" class="has-text-info">Metaweather</a></span>
 </div>
 <script>
@@ -29,7 +29,7 @@
     const round = function (flt){return Number.parseFloat(flt).toPrecision(3)}
     request.onload = function () {
         const data = JSON.parse(this.response)
-        document.getElementById('weatherLoadingText_{{$randID}}').classList.add("is-hidden")
+        document.getElementById('weatherLoading_{{$randID}}').classList.add("is-hidden")
         document.getElementById('weatherStateText_{{$randID}}').innerText = data["consolidated_weather"][0]["weather_state_name"]
         document.getElementById('weatherTempText_{{$randID}}').innerHTML = round(data["consolidated_weather"][0]["the_temp"]*1.8+32) + " &deg;F"
         document.getElementById('weatherStateImg_{{$randID}}').data = "/proxy/" + btoa("https://www.metaweather.com/static/img/weather/" + data["consolidated_weather"][0]["weather_state_abbr"] + ".svg")
