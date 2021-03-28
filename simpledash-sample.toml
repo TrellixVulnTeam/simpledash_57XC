@@ -38,7 +38,7 @@ allowProxy = ["https://www.metaweather.com/", "https://ifconfig.co/json"]
       title = "Gmail"
       icon = "simple-icons:gmail"
       desc = "Gmail mail client. Simple card example"
-      url = "http://openwrt/"
+      url = "https://mail.google.com/"
 
     [[users.admin.card]]
       type = "collection"
