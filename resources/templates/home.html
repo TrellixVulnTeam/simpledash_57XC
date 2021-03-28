@@ -26,7 +26,7 @@
                     {{end}}
                     {{ range $_, $card := .User.Cards }}
                     <div class="column is-half-tablet is-one-quarter-fullhd is-one-third-desktop is-full-mobile">
-                        <div class="card is-fullheight is-scrollable" style="min-height: 175px; max-height: 175px; overflow: auto">
+                        <div class="card is-fullheight is-scrollable" style="min-height: 175px; max-height: 175px">
                             {{dyn_template $card.Type $card}}
                         </div>
                     </div>
