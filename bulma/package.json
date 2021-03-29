@@ -1,0 +1,19 @@
+{
+  "name": "bulma-liwu",
+  "version": "1.0.0",
+  "main": "sass/custom-styles.scss",
+  "license": "MIT",
+  "devDependencies": {
+    "bulma": "file:bulma",
+    "bulma-checkradio": "^1.1.1",
+    "node-sass": "^5.0.0"
+  },
+  "scripts": {
+    "css-build": "node-sass --output-style compressed --omit-source-map-url sass/custom-styles.scss css/custom-styles.min.css",
+    "css-watch": "ls sass/custom-styles.scss | entr -s 'npm run css-build && cp -v css/custom-styles.min.css ~/Code/simpledash/resources/public/css/bulma.min.css'",
+    "start": "npm run css-watch"
+  },
+  "dependencies": {
+    "bulma-switch": "^2.0.0"
+  }
+}

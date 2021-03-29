@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+// Set your brand colors
+$blue-grey: #424B55;
+$beige-light: #ededed;
+$beige-lighter: #dce1e1;
+
+// Import only what you need from Bulma
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/elements/_all.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+@import "../node_modules/bulma/sass/components/_all.sass";
+@import "../node_modules/bulma/sass/layout/_all.sass";
+@import "../node_modules/bulma/sass/grid/_all.sass";
+@import "../node_modules/bulma/sass/helpers/_all.sass";
+@import "../node_modules/bulma-switch/dist/css/bulma-switch.sass";
+@import "../node_modules/bulma-checkradio/dist/css/bulma-checkradio.sass";
+
+// Update some of Bulma component variables
+$body-background-color: $beige-light;
+
+// Update bulma-switch default variables
+$switch-background: $primary;
+
+// Update bulma-checkradio default variables
+$checkbox-border: .1rem solid $primary;
+
+
+.button {
+  &.is-transparent {
+    background: none;
+    background-color: initial !important;
+    border: none
+  }
+}
+
+.card {
+  &.is-scrollable {
+    overflow: auto;
+  }
+  &.is-fullheight {
+  	display: flex;
+  	flex-direction: column;
+  }
+}
+
+.card-footer {
+  margin-top: auto;
+}

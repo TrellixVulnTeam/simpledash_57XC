@@ -1,0 +1,31 @@
+defaultName = "simpledash"
+defaultTarget = "build"
+
+
+def simpledash_build():
+    # Check if node-sass is installed
+    if shell.LookPath("node-sass") == -1:
+        # Warn user if not
+        log.Warn("node-sass must be installed to build bulma for simpledash")
+    else:
+        # Build bulma if node-sass installed
+        shell.Exec("""
+        cd bulma
+        node-sass --output-style compressed --omit-source-map-url sass/custom-styles.scss css/custom-styles.min.css
+        cp -v css/custom-styles.min.css ../resources/public/css/bulma.min.css
+        """)
+    # Check if go is installed
+    if shell.LookPath("go") == -1:
+        # Log fatally if not
+        log.Fatal("go must be installed to compile simpledash")
+    # Build simpledash
+    shell.Exec("go build")
+
+
+def simpledash_run():
+    # If simpledash binary does not exist
+    if not file.Exists("simpledash"):
+        # Log fatally
+        log.Fatal("simpledash should be built before running, run `advmake` to build")
+    # Execute simpledash binary
+    shell.Exec("./simpledash")
