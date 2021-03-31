@@ -5,14 +5,14 @@
 <div class="card-content">
     <progress class="progress is-light" id="weatherLoading_{{$randID}}"></progress>
     <div class="columns is-mobile">
-        <div class="column is-half">
+        <div class="column is-half" style="padding-bottom: 0;">
             <object type="image/svg+xml" id="weatherStateImg_{{$randID}}" style="width:45px; height: 45px"></object>
         </div>
         <div class="column is-half">
             <p id="weatherTempText_{{$randID}}" class="has-text-right subtitle"></p>
         </div>
     </div>
-    <p class="subtitle is-marginless" id="weatherStateText_{{$randID}}"></p>
+    <p class="subtitle" id="weatherStateText_{{$randID}}"></p>
     <p id="weatherMinText_{{$randID}}"></p>
     <p id="weatherMaxText_{{$randID}}"></p>
     <p id="weatherWindSpeedText_{{$randID}}"></p>
