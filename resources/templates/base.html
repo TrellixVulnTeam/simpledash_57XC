@@ -17,6 +17,7 @@
 <title>{{.SiteTitle}} - {{.PageTitle}}</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+<link rel="icon" type="image/svg+xml" href="/simpledash.svg">
 <style>
     ::-webkit-scrollbar {border-radius: 24px; width: 8px;}
     ::-webkit-scrollbar-thumb {background: #e5e5e5; border-radius: 10px;}
@@ -44,7 +45,9 @@
 <nav class="navbar" role="navigation" aria-label="main nav" >
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item" href="/">{{.SiteTitle}}</a>
+            <a class="navbar-item" href="/">
+            	{{.SiteTitle}}
+            </a>
 
             <a role="button" class="navbar-burger" onclick="toggleNavMenu()" aria-label="menu" aria-expanded="false" id="navbarBurger">
                 <span aria-hidden="true"></span>

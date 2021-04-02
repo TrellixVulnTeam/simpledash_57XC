@@ -22,6 +22,7 @@ import (
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
 	"io"
+	"mime"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -233,6 +234,8 @@ func registerRoutes(app App) {
 			httpError(res, app.Templates["error"], app.Config, http.StatusNotFound, "This file was not found")
 			return
 		}
+		// Set Content-Type header based on file extension
+		res.Header().Set("Content-Type", mime.TypeByExtension(filepath.Ext(filePath)))
 		// Close file at end of function
 		defer file.Close()
 		// Compress response
