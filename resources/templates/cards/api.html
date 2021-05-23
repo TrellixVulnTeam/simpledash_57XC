@@ -29,5 +29,8 @@
         document.getElementById("{{printf `APIElement%d_%s` $index $randID}}").innerHTML = `{{unescJS (trim $fmtStr)}}`
         {{end}}
     }
+    {{range $key, $value := .Data.headers}}
+    request.setRequestHeader("{{$key}}", "{{$value}}")
+    {{end}}
     request.send()
 </script>

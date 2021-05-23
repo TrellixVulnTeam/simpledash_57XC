@@ -24,10 +24,10 @@
     <span class="card-footer-item">Data from&nbsp;<a href="https://www.metaweather.com" class="has-text-info">Metaweather</a></span>
 </div>
 <script>
-    var request = new XMLHttpRequest()
-    request.open('GET', "{{proxy (printf `https://www.metaweather.com/api/location/%s/` .Data.woeid)}}", true)
+    var wtrRequest = new XMLHttpRequest()
+    wtrRequest.open('GET', "{{proxy (printf `https://www.metaweather.com/api/location/%s/` .Data.woeid)}}", true)
     const round = function (flt){return Number.parseFloat(flt).toPrecision(3)}
-    request.onload = function () {
+    wtrRequest.onload = function () {
         const data = JSON.parse(this.response)
         document.getElementById('weatherLoading_{{$randID}}').classList.add("is-hidden")
         document.getElementById('weatherStateText_{{$randID}}').innerText = data["consolidated_weather"][0]["weather_state_name"]
@@ -40,5 +40,6 @@
         document.getElementById('weatherVisibilityText_{{$randID}}').innerText = "Visibility: " + round(data["consolidated_weather"][0]["visibility"]) + "mi"
         document.getElementById('weatherPredictabilityText_{{$randID}}').innerText = "Predictability: " + data["consolidated_weather"][0]["predictability"] + "%"
     }
-    request.send()
+    wtrRequest.setRequestHeader("Content-Type", "text/plain")
+    wtrRequest.send()
 </script>

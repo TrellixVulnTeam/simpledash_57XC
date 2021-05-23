@@ -205,6 +205,7 @@ func registerRoutes(app App) {
 			}
 			// Create new HTTP client with 5 second timeout
 			client := http.Client{Timeout: 5 * time.Second}
+			proxyReq.Header = req.Header
 			// Use client to do request created above
 			proxyRes, err := client.Do(proxyReq)
 			if err != nil {
@@ -214,6 +215,24 @@ func registerRoutes(app App) {
 			}
 			// Close proxy response body at end of function
 			defer proxyRes.Body.Close()
+			/*
+			var proxyReader io.Reader
+			switch proxyRes.Header.Get("Content-Type") {
+			case "application/x-gzip":
+				gzReader, err := gzip.NewReader(proxyRes.Body)
+				if err != nil {
+					httpError(res, app.Templates["error"], app.Config, http.StatusInternalServerError, "Decompressing response failed")
+					Log.Warn().Err(err).Msg("Error executing request for proxy")
+					return
+				}
+				proxyReader = gzReader
+			} else {
+				proxyReader = proxyRes.Body
+			}
+			 */
+			for key := range proxyRes.Header {
+				res.Header().Set(key, proxyRes.Header.Get(key))
+			}
 			// Copy data from proxy response to response
 			io.Copy(res, proxyRes.Body)
 		} else {
